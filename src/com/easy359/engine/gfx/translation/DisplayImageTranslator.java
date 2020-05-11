@@ -1,8 +1,8 @@
 package com.easy359.engine.gfx.translation;
 
-import java.util.List;
-
 import com.easy359.engine.gfx.DisplayImage;
+
+import java.util.List;
 
 public interface DisplayImageTranslator {
 

@@ -18,58 +18,58 @@ public class MouseInput extends MouseAdapter {
     private static ArrayList<Integer> afterPressedButtons;
 
     private MouseInput() {
-	pressedButtons = new ArrayList<Integer>();
-	justPressedButtons = new ArrayList<Integer>();
-	afterPressedButtons = new ArrayList<Integer>();
+        pressedButtons = new ArrayList<Integer>();
+        justPressedButtons = new ArrayList<Integer>();
+        afterPressedButtons = new ArrayList<Integer>();
     }
 
     public static void create() {
-	if (instance == null)
-	    instance = new MouseInput();
+        if (instance == null)
+            instance = new MouseInput();
     }
 
     public static MouseInput getInstance() {
-	create();
-	return instance;
+        create();
+        return instance;
     }
 
     public static void update() {
-	synchronized (pressedButtons) {
-	    for (int i = 0; i < pressedButtons.size(); i++) {
-		if (!justPressedButtons.contains(pressedButtons.get(i))
-			&& !afterPressedButtons.contains(pressedButtons.get(i))) {
-		    justPressedButtons.add(pressedButtons.get(i));
-		} else {
-		    justPressedButtons.remove(Integer.valueOf(pressedButtons.get(i)));
-		    afterPressedButtons.add(pressedButtons.get(i));
-		}
-	    }
-	    justPressedButtons.retainAll(pressedButtons);
-	    afterPressedButtons.retainAll(pressedButtons);
-	}
+        synchronized (pressedButtons) {
+            for (int i = 0; i < pressedButtons.size(); i++) {
+                if (!justPressedButtons.contains(pressedButtons.get(i))
+                        && !afterPressedButtons.contains(pressedButtons.get(i))) {
+                    justPressedButtons.add(pressedButtons.get(i));
+                } else {
+                    justPressedButtons.remove(Integer.valueOf(pressedButtons.get(i)));
+                    afterPressedButtons.add(pressedButtons.get(i));
+                }
+            }
+            justPressedButtons.retainAll(pressedButtons);
+            afterPressedButtons.retainAll(pressedButtons);
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-	synchronized (pressedButtons) {
-	    if (!pressedButtons.contains(Integer.valueOf(e.getButton()))) {
-		pressedButtons.add(e.getButton());
-	    }
-	}
+        synchronized (pressedButtons) {
+            if (!pressedButtons.contains(Integer.valueOf(e.getButton()))) {
+                pressedButtons.add(e.getButton());
+            }
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-	synchronized (pressedButtons) {
-	    pressedButtons.remove(Integer.valueOf(e.getButton()));
-	}
+        synchronized (pressedButtons) {
+            pressedButtons.remove(Integer.valueOf(e.getButton()));
+        }
     }
 
     public static boolean isButtonPressed(int button) {
-	return pressedButtons.contains(button);
+        return pressedButtons.contains(button);
     }
 
     public static boolean isButtonJustPressed(int button) {
-	return justPressedButtons.contains(button);
+        return justPressedButtons.contains(button);
     }
 }

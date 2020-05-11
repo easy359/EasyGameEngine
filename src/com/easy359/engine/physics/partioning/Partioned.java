@@ -1,9 +1,9 @@
 package com.easy359.engine.physics.partioning;
 
-import java.util.List;
-
 import com.easy359.engine.physics.AABB;
 import com.easy359.engine.physics.Bounded;
+
+import java.util.List;
 
 public interface Partioned<T extends Bounded> {
 

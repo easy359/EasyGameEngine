@@ -8,29 +8,29 @@ import java.util.List;
 public class EventHandler {
 
     public static boolean invoke(EventObject evt, Object obj) {
-	for (Method mth : obj.getClass().getDeclaredMethods()) {
-	    if (mth.isAnnotationPresent(EventReceiver.class)) {
-		if (mth.getParameterCount() == 1) {
-		    if (mth.getParameters()[0].getType().equals(evt.getClass())) {
-			try {
-			    mth.invoke(obj, evt);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			    e.printStackTrace();
-			    return false;
-			}
-		    }
-		}
-	    }
-	}
-	return true;
+        for (Method mth : obj.getClass().getDeclaredMethods()) {
+            if (mth.isAnnotationPresent(EventReceiver.class)) {
+                if (mth.getParameterCount() == 1) {
+                    if (mth.getParameters()[0].getType().equals(evt.getClass())) {
+                        try {
+                            mth.invoke(obj, evt);
+                        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                            e.printStackTrace();
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     public static boolean invoke(EventObject evt, List<Object> objs) {
-	boolean noProblems = true;
-	for (Object obj : objs) {
-	    if (!invoke(evt, obj))
-		noProblems = false;
-	}
-	return noProblems;
+        boolean noProblems = true;
+        for (Object obj : objs) {
+            if (!invoke(evt, obj))
+                noProblems = false;
+        }
+        return noProblems;
     }
 }

@@ -7,7 +7,7 @@ public class Label implements MenuComponent {
     private DisplayImage img;
 
     public Label(DisplayImage img) {
-	this.img = img;
+        this.img = img;
     }
 
     @Override
@@ -16,11 +16,11 @@ public class Label implements MenuComponent {
 
     @Override
     public DisplayImage getDisplayImage() {
-	return img;
+        return img;
     }
 
     public void setDisplayImage(DisplayImage img) {
-	this.img = img;
+        this.img = img;
     }
 
 }

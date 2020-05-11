@@ -12,39 +12,39 @@ public class DelayedAction {
     private boolean isPaused;
 
     public DelayedAction(ActionListener listener, double delay) {
-	this.listener = listener;
-	this.delay = delay;
-	delayStartTime = Time.now();
-	isPaused = false;
+        this.listener = listener;
+        this.delay = delay;
+        delayStartTime = Time.now();
+        isPaused = false;
     }
 
     public void update(double delta) {
-	if (isPaused)
-	    return;
-	if (Time.now() - delayStartTime >= delay) {
-	    delayStartTime = Time.now();
-	    ActionEvent e = new ActionEvent(this, 0, "");
-	    listener.actionPerformed(e);
-	}
+        if (isPaused)
+            return;
+        if (Time.now() - delayStartTime >= delay) {
+            delayStartTime = Time.now();
+            ActionEvent e = new ActionEvent(this, 0, "");
+            listener.actionPerformed(e);
+        }
     }
 
     public void reset() {
-	delayStartTime = Time.now();
+        delayStartTime = Time.now();
     }
 
     public void pause() {
-	if (isPaused)
-	    return;
-	isPaused = true;
-	pauseStartTime = Time.now();
+        if (isPaused)
+            return;
+        isPaused = true;
+        pauseStartTime = Time.now();
 
     }
 
     public void unpause() {
-	if (!isPaused)
-	    return;
-	isPaused = false;
-	delayStartTime = (Time.now() - (pauseStartTime - delayStartTime));
+        if (!isPaused)
+            return;
+        isPaused = false;
+        delayStartTime = (Time.now() - (pauseStartTime - delayStartTime));
     }
 
 }

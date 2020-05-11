@@ -60,58 +60,58 @@ public class KeyboardInput extends KeyAdapter {
     private static ArrayList<Integer> afterPressedKeys;
 
     private KeyboardInput() {
-	pressedKeys = new ArrayList<Integer>();
-	justPressedKeys = new ArrayList<Integer>();
-	afterPressedKeys = new ArrayList<Integer>();
+        pressedKeys = new ArrayList<Integer>();
+        justPressedKeys = new ArrayList<Integer>();
+        afterPressedKeys = new ArrayList<Integer>();
     }
 
     public static void create() {
-	if (instance == null)
-	    instance = new KeyboardInput();
+        if (instance == null)
+            instance = new KeyboardInput();
     }
 
     public static KeyboardInput getInstance() {
-	create();
-	return instance;
+        create();
+        return instance;
     }
 
     public static void update() {
-	synchronized (pressedKeys) {
-	    for (int i = 0; i < pressedKeys.size(); i++) {
-		if (!justPressedKeys.contains(pressedKeys.get(i)) && !afterPressedKeys.contains(pressedKeys.get(i))) {
-		    justPressedKeys.add(pressedKeys.get(i));
-		} else {
-		    justPressedKeys.remove(Integer.valueOf(pressedKeys.get(i)));
-		    afterPressedKeys.add(pressedKeys.get(i));
-		}
-	    }
-	    justPressedKeys.retainAll(pressedKeys);
-	    afterPressedKeys.retainAll(pressedKeys);
-	}
+        synchronized (pressedKeys) {
+            for (int i = 0; i < pressedKeys.size(); i++) {
+                if (!justPressedKeys.contains(pressedKeys.get(i)) && !afterPressedKeys.contains(pressedKeys.get(i))) {
+                    justPressedKeys.add(pressedKeys.get(i));
+                } else {
+                    justPressedKeys.remove(Integer.valueOf(pressedKeys.get(i)));
+                    afterPressedKeys.add(pressedKeys.get(i));
+                }
+            }
+            justPressedKeys.retainAll(pressedKeys);
+            afterPressedKeys.retainAll(pressedKeys);
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-	synchronized (pressedKeys) {
-	    if (!pressedKeys.contains(Integer.valueOf(e.getKeyCode()))) {
-		pressedKeys.add(e.getKeyCode());
-	    }
-	}
+        synchronized (pressedKeys) {
+            if (!pressedKeys.contains(Integer.valueOf(e.getKeyCode()))) {
+                pressedKeys.add(e.getKeyCode());
+            }
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	synchronized (pressedKeys) {
-	    pressedKeys.remove(Integer.valueOf(e.getKeyCode()));
-	}
+        synchronized (pressedKeys) {
+            pressedKeys.remove(Integer.valueOf(e.getKeyCode()));
+        }
     }
 
     public static boolean isKeyPressed(int keyCode) {
-	return pressedKeys.contains(keyCode);
+        return pressedKeys.contains(keyCode);
     }
 
     public static boolean isKeyJustPressed(int keyCode) {
-	return justPressedKeys.contains(keyCode);
+        return justPressedKeys.contains(keyCode);
     }
 
 }
